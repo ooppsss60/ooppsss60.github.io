@@ -1,0 +1,9 @@
+#video {
+	object-fit: contain;
+	width: 100%;
+	display: none;
+}
+.invalid-feedback {
+    display: block;
+}
+
