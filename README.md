@@ -13,5 +13,5 @@
   3. Paste video url.
   4. Watch!
   
-  Supported video format: **.mp4 .ogg .ogv .webm**
+  Supported video formats: **.mp4 .ogg .ogv .webm**
   

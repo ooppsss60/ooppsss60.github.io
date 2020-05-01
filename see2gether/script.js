@@ -39,28 +39,21 @@ $(function () {
 		setInterval(getData, 1000);
 	}
 
+	updateUserlist();
+
 	function getData(){
 		$.get(jsonUrl, function (data, textStatus, jqXHR) {
 			$('#debug')[0].innerHTML=JSON.stringify(data,null,2);
-			if(data.src!=prevSrc){
+			if(data.src!==prevSrc){
 				prevSrc=data.src;
 				source.src = data.src;
-				video.load()
-				if(data.src){
-					$('#video').show();
-				}else{
-					$('#video').hide();
-				}
+				video.load();
+				data.src ? $('#video').show() : $('#video').hide();
 			}
 			
 			if(data.userId !== userId ) {
-				if (!data.pause) {
-					video.play()
-				} else {
-					video.pause()
-				}
+				data.pause ? video.pause() : video.play();
 				if (prevTime !== data.currentTime && Math.abs(video.currentTime - data.currentTime) > 1) {
-					console.log("change time");
 					video.currentTime = data.currentTime
 					prevTime = data.currentTime
 				}
@@ -77,7 +70,7 @@ $(function () {
 			video.load()
 		}
 		data.userId = userId;
-		data.src = (source.src == baseUrl+'?'+roomId) ? '':source.src;
+		data.src = (source.src === baseUrl+'?'+roomId) ? '' : source.src;
 		data.duration = video.duration;
 		data.currentTime = video.currentTime;
 		if (event.type==='play'){
@@ -99,11 +92,13 @@ $(function () {
 		});
 	}
 
+	function updateUserlist(){
+		data.users[userId] = userName;
+		sendData(data)
+	}
 
 	video.addEventListener('seeked', updateData);
 	video.addEventListener('pause', updateData);
 	video.addEventListener('play', updateData);
-	openButton.addEventListener('click', updateData)
-	
-
+	openButton.addEventListener('click', updateData);
 });
